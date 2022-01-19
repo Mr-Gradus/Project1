@@ -5,6 +5,9 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <iomanip>
+
+
 
 struct Person {
 	
@@ -14,27 +17,27 @@ struct Person {
 
 };
 
-std::optional<std::string> getPatStr(std::string& p)
+std::optional<std::string> getPatStr(std::string& patr)
 {
-	if ( p == "")
+	if ( patr == "-")
 	{
 		return std::nullopt;
 	}
 
-	return p;
+	return patr;
 }
 
 std::ostream& operator<< (std::ostream& out, const Person& person)
 {
-	out << person.surname << "   " << person.name << "   ";
+	out << std::setw(13) << person.surname << std::setw(10) << person.name;
 
 	if (person.patronymic.has_value())
 	{
-		out << person.patronymic.value();
+		out << std::setw(15) <<person.patronymic.value();
 	}
 	else
 	{
-		out << "";
+		out << std::setw(20);
 	}
 	return out;
 }
@@ -57,23 +60,23 @@ struct PhoneNumber {
 	std::optional<int> addNum;
 };
 
-std::optional<int> getAddNum(std::string& n)
+std::optional<int> getAddNum(std::string& add)
 {
-	if (n == "")
+	if (add == "-")
 	{
 		return std::nullopt;
 	}
 
-	return stoi(n);
+	return std::stoi(add); 
 }
 
 std::ostream& operator<< (std::ostream& out, const PhoneNumber& pn)
 {
-	out << '+' << pn.pageCode << '(' << pn.cityCode << ')' << pn.phoneNum;
+	out << std::setw(3) << '+' << pn.pageCode << '(' << pn.cityCode << ')' << pn.phoneNum;
 
 	if (pn.addNum.has_value())
 	{
-		out << ' ' << pn.addNum.value() << std::endl;
+		out << " " << pn.addNum.value() << std::endl;
 	}
 	else
 	{
@@ -110,12 +113,13 @@ public:
 
 			int pageCode;
 			int cityCode;
-			std::string number;
+			std::string phoneNum;
 			std::string addNumber;
 
 			while (!in.eof()) // До конца файла
 			{
-				in >> surname >> name >> patronymic >> pageCode >> cityCode >> number >> addNumber;
+				in >> surname >> name >> patronymic >> pageCode >> cityCode >> phoneNum >> addNumber;
+				
 				std::optional <std::string> patr; // по умолчанию равен nullopt
 
 				if (patronymic != "-") // Если в файле стоит прочерк
@@ -124,7 +128,8 @@ public:
 				std::optional <int> add;
 				if (addNumber != "-")
 					add = std::stoi(addNumber); // то же самое
-				m_contact.emplace_back(Person{ surname, name, patr }, PhoneNumber{ pageCode, cityCode, number, add });
+					
+				m_contact.emplace_back(Person{ surname, name, patr}, PhoneNumber{pageCode, cityCode, phoneNum, add});
 			}
 			in.close();
 		}
@@ -149,7 +154,7 @@ std::ostream& operator<< (std::ostream& out, const PhoneBook& pb)
 {
 	for (const auto& [first, second] : pb.m_contact)
 	{
-		out << first << " " << second << std::endl;
+		out << first << ' ' << second << std::endl;
 	}
 	return out;
 }

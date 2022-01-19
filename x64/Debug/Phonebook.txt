@@ -1,0 +1,9 @@
+Zaitseva,Inna,Artemovna,7,343,455976,101;
+Abdullov,Zakhar,-,125,44,4164751,-;
+Dubnov,Aleksandr,Mikhailovich,7,473,7449054,-;
+Novoselova,Elena,Sergeevna,7,495,4545454,3256;
+Bublik,Natalia,Nikolaevna,7,922,1235552,303;
+Rybin,Dmitry,Valerievich,7,922,1235666,666;
+Ahmedov,Rinat,-,3,248,56487962,-;
+Volkova,Alena,Olegovna,7,343,123456,111;
+Kuznecov,Petr,Ivanovich,9,999,99999999,-;
